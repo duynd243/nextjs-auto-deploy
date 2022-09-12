@@ -43,6 +43,15 @@ jobs:
           username: ${{ secrets.REMOTE_USER }}
           privateKey: ${{ secrets.REMOTE_SSH_KEY }}
           
+      - name: executing remote ssh commands using ssh key
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.REMOTE_USER }}
+          key: ${{ secrets.REMOTE_SSH_KEY }}
+          port: 22
+          script: cd /var/www/next-app ; yarn install;  yarn build ; yarn start    
+          
       - name: Start
         uses: garygrossgarten/github-action-ssh@v0.6.4
         with:
