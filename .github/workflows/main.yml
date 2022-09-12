@@ -27,7 +27,7 @@ jobs:
       - name: Stop Running Service
         uses: garygrossgarten/github-action-ssh@v0.6.4
         with:
-          command: sudo kill -9 $(sudo lsof -t -i:3000)
+          command: sudo kill -9 $(sudo lsof -t -i:3000) ; echo "..."
           host: ${{ secrets.REMOTE_HOST }}
           username: ${{ secrets.REMOTE_USER }}
           privateKey: ${{ secrets.REMOTE_SSH_KEY }}
