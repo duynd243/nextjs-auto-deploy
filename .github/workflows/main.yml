@@ -27,7 +27,7 @@ jobs:
       - name: Stop Running Service
         uses: garygrossgarten/github-action-ssh@v0.6.4
         with:
-          command: sudo systemctl stop nextjs
+          command: /home/ubuntu/.nvm/versions/node/v16.17.0/bin/pm2 delete nextjs
           host: ${{ secrets.REMOTE_HOST }}
           username: ${{ secrets.REMOTE_USER }}
           privateKey: ${{ secrets.REMOTE_SSH_KEY }}
@@ -46,7 +46,7 @@ jobs:
       - name: Start
         uses: garygrossgarten/github-action-ssh@v0.6.4
         with:
-          command: sudo systemctl start nextjs
+          command: cd /var/www/next-app ; yarn install;  yarn build ; /home/ubuntu/.nvm/versions/node/v16.17.0/bin/pm2 start "yarn start" --name nextjs
           host: ${{ secrets.REMOTE_HOST }}
           username: ${{ secrets.REMOTE_USER }}
           privateKey: ${{ secrets.REMOTE_SSH_KEY }}
