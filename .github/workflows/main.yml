@@ -46,7 +46,7 @@ jobs:
       - name: Start
         uses: garygrossgarten/github-action-ssh@v0.6.4
         with:
-          command: cd /var/www/next-app ; yarn install;  yarn build ; yarn start
+          command: cd /var/www/next-app ; sudo su ubuntu; yarn install;  yarn build ; yarn start
           host: ${{ secrets.REMOTE_HOST }}
           username: ${{ secrets.REMOTE_USER }}
           privateKey: ${{ secrets.REMOTE_SSH_KEY }}
