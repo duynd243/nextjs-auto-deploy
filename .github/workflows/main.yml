@@ -33,7 +33,7 @@ jobs:
       - run: yarn build
       - run: pwd
       - name: Stop Running Service
-      - uses: garygrossgarten/github-action-ssh@v0.6.4
+        uses: garygrossgarten/github-action-ssh@v0.6.4
         with:
           command: sudo systemctl stop nextjs
           host: ${{ secrets.REMOTE_HOST }}
@@ -41,7 +41,7 @@ jobs:
           privateKey: ${{ secrets.REMOTE_SSH_KEY }}
           
       - name: Copy Release folder into Server
-      - uses: garygrossgarten/github-action-scp@release
+        uses: garygrossgarten/github-action-scp@release
         with:
           local: ./Release
           remote: /var/www/next-app
