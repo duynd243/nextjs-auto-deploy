@@ -35,7 +35,7 @@ jobs:
       - name: Copy Release folder into Server
         uses: garygrossgarten/github-action-scp@release
         with:
-          local: $(pwd)
+          local: /home/runner/work/nextjs-auto-deploy/nextjs-auto-deploy
           remote: /var/www/next-app
         # This remote directory should be set for full read/write permission
         # sudo chmod 777 /path/to/directory
