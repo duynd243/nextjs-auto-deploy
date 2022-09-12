@@ -49,7 +49,6 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.REMOTE_USER }}
           key: ${{ secrets.REMOTE_SSH_KEY }}
-          port: 22
           script: cd /var/www/next-app ; yarn install;  yarn build ; yarn start    
           
       - name: Start
