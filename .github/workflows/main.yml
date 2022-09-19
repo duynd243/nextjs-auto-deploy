@@ -34,6 +34,7 @@ jobs:
       - run: yarn run build
       - run: sudo mkdir -p /home/next-app
       - run: mv * /home/next-app
+      - run: cd /home/next-app
       - run: sudo tar -czvf next-app.tar.gz *
       - name: copy file via ssh key
         uses: appleboy/scp-action@master
