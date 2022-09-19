@@ -36,12 +36,14 @@ jobs:
       - run: mv * /home/next-app
       - run: sudo tar -czvf next-app.tar.gz /home/next-app
       - run: mv next-app.tar.gz /home/next-app
-      - name: copy file via ssh key
-        uses: appleboy/scp-action@master
+      - name: Copy new Release folder into Server
+        uses: garygrossgarten/github-action-scp@release
         with:
+          local: /home/next-app
+          remote: /var/www/next-app
+        # This remote directory should be set for full read/write permission
+        # sudo chmod 777 /path/to/directory
           host: ${{ secrets.REMOTE_HOST }}
           username: ${{ secrets.REMOTE_USER }}
-          key: ${{ secrets.REMOTE_SSH_KEY }}
-          source: "/home/next-app/next-app.tar.gz"
-          target: "/var/www/next-app"
+          privateKey: ${{ secrets.REMOTE_SSH_KEY }}
         
