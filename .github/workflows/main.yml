@@ -23,38 +23,22 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v3
-      - name: Stop Running Service
-        uses: garygrossgarten/github-action-ssh@v0.6.4
+      - name: Checking out latest code
+        uses: actions/checkout@v3
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v3.4.1
         with:
-          command: sudo kill -9 $(sudo lsof -t -i:3000) ; echo "..." ; cd /var/www/next-app ; rm -r -f *
+          node-version: 16
+      - run: npm i -g yarn
+      - run: yarn install --frozen-lockfile
+      - run: yarn run build
+      - run: mv out html
+      - name: copy file via ssh key
+        uses: appleboy/scp-action@master
+        with:
           host: ${{ secrets.REMOTE_HOST }}
-          username: ${{ secrets.REMOTE_USER }}
-          privateKey: ${{ secrets.REMOTE_SSH_KEY }}
-          
-      - name: Copy Release folder into Server
-        uses: garygrossgarten/github-action-scp@release
-        with:
-          local: /home/runner/work/nextjs-auto-deploy/nextjs-auto-deploy
-          remote: /var/www/next-app
-        # This remote directory should be set for full read/write permission
-        # sudo chmod 777 /path/to/directory
-          host: ${{ secrets.REMOTE_HOST }}
-          username: ${{ secrets.REMOTE_USER }}
-          privateKey: ${{ secrets.REMOTE_SSH_KEY }}
-          
-      - name: executing remote ssh commands using ssh key
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.HOST }}
           username: ${{ secrets.REMOTE_USER }}
           key: ${{ secrets.REMOTE_SSH_KEY }}
-          script: cd /var/www/next-app ; yarn install;  yarn build ; yarn start    
-          
-      - name: Start
-        uses: garygrossgarten/github-action-ssh@v0.6.4
-        with:
-          command: cd /var/www/next-app ; sudo su ubuntu; yarn install;  yarn build ; yarn start
-          host: ${{ secrets.REMOTE_HOST }}
-          username: ${{ secrets.REMOTE_USER }}
-          privateKey: ${{ secrets.REMOTE_SSH_KEY }}
+          source: "html"
+          target: "/var/www/next-app"
+        
