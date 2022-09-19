@@ -41,6 +41,7 @@ jobs:
           host: ${{ secrets.REMOTE_HOST }}
           username: ${{ secrets.REMOTE_USER }}
           key: ${{ secrets.REMOTE_SSH_KEY }}
+          overwrite: --overwrite
           source: "/home/next-app"
           target: "/var/www/next-app"
         
