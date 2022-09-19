@@ -43,6 +43,6 @@ jobs:
           host: ${{ secrets.REMOTE_HOST }}
           username: ${{ secrets.REMOTE_USER }}
           key: ${{ secrets.REMOTE_SSH_KEY }}
-          source: "/home/next-app/next-app.tar.gz"
+          source: "/home/next-app/*"
           target: "/var/www/next-app"
         
