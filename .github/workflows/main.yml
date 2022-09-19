@@ -32,7 +32,7 @@ jobs:
       - run: npm i -g yarn
       - run: yarn install --frozen-lockfile
       - run: yarn run build
-      - run: sudo tar -cvf final.tar *
+      - run: sudo tar -cvpzf final.tar *
       - name: Deploy to Staging server
         uses: easingthemes/ssh-deploy@main
         env:
