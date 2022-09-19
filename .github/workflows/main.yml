@@ -48,7 +48,7 @@ jobs:
           host: ${{ secrets.REMOTE_HOST }}
           username: ${{ secrets.REMOTE_USER }}
           key: ${{ secrets.REMOTE_SSH_KEY }}
-          script: cd /var/www/next-app ; sudo tar -xvf final.tar
+          script: cd /var/www/next-app ; sudo tar -xvf final.tar ; pm2 restart next-app
         
       
         
