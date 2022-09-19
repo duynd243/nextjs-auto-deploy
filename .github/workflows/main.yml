@@ -33,8 +33,8 @@ jobs:
       - run: yarn install --frozen-lockfile
       - run: yarn run build
       - run: sudo mkdir -p /home/next-app
-      - run: cd /home ; ls
       - run: mv * /home/next-app
+      - run: cd /home/next-app ; ls
       - name: copy file via ssh key
         uses: appleboy/scp-action@master
         with:
