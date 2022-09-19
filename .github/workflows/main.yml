@@ -36,13 +36,13 @@ jobs:
       - run: mv * /home/next-app
       - run: sudo tar -czvf next-app.tar.gz /home/next-app
       - run: mv next-app.tar.gz /home/next-app
+      - name: Deploy to Staging server
+        uses: easingthemes/ssh-deploy@main
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.REMOTE_SSH_KEY }}
+          SOURCE: "home/next-app/"
+          REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
+          REMOTE_USER: ${{ secrets.REMOTE_USER }}
+          TARGET: "var/www/next-app"
       
-      - name: Upload Files
-        uses: siva1024/scp-deployer@latest
-        with:
-          host: ${{ secrets.REMOTE_HOST }}
-          username: ${{ secrets.REMOTE_USER }}
-          key: ${{ secrets.REMOTE_SSH_KEY }}
-          source: "/home/next-app/*"
-          target: "/var/www/next-app"
         
