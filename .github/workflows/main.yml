@@ -32,14 +32,15 @@ jobs:
       - run: npm i -g yarn
       - run: yarn install --frozen-lockfile
       - run: yarn run build
-      - run: sudo tar -czvf next-app.tar.gz /home
-      - run: cd /home/next-app ; ls
+      - run: sudo mkdir -p /home/next-app
+      - run: mv * /home/next-app
+      - run: sudo tar -czvf next-app.tar.gz *
       - name: copy file via ssh key
         uses: appleboy/scp-action@master
         with:
           host: ${{ secrets.REMOTE_HOST }}
           username: ${{ secrets.REMOTE_USER }}
           key: ${{ secrets.REMOTE_SSH_KEY }}
-          source: "/home/*"
+          source: "/home/next-app/next-app.tar.gz"
           target: "/var/www/next-app"
         
